@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // MongoDB connection string (local)
-const db = "mongodb://localhost:27017/phone-data";
+const db = "mongodb+srv://chienpvgch221136:chienpvgch221136@mydbcluster.6kuho.mongodb.net/?retryWrites=true&w=majority&appName=MyDBCLuster";
 
 // Connect to MongoDB using Mongoose
 mongoose.connect(db)
@@ -28,7 +28,7 @@ const router = require('./api/routes/iPhoneRoute');
 router(app); // Register routes by calling the exported function
 
 // Start the server
-const port = 3000;
+const port =process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server running at: http://localhost:${port}`);
 });
