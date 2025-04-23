@@ -1,34 +1,44 @@
 const express = require('express');
-const cors = require('cors'); // Import CORS middleware
+const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
 
-// Enable CORS
+// ✅ Cho phép cả local và Vercel frontend gọi API
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://frontend-rosy-rho.vercel.app'
+];
+
 app.use(cors({
-    origin: 'http://localhost:5173', // Allow only this frontend origin to access the API
-    methods: 'GET,POST,PUT,DELETE',  // Allowed HTTP methods
-    allowedHeaders: 'Content-Type,Authorization' // Allowed request headers
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Middleware to parse incoming request bodies
+// Middleware để parse JSON & form data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// MongoDB connection string 
+// ✅ Kết nối MongoDB
 const db = "mongodb+srv://chienpvgch221136:Chien1092004%40@mydbcluster.6kuho.mongodb.net/phone-data";
 
-// Connect to MongoDB using Mongoose
 mongoose.connect(db)
-    .then(() => console.log('success!')) // Connection successful
-    .catch((err) => console.error('MongoDB connection error:', err)); // Handle connection errors
+  .then(() => console.log('✅ MongoDB connected successfully!'))
+  .catch((err) => console.error('❌ MongoDB connection error:', err));
 
-// Import and use routes
-const router = require('./api/routes/iPhoneRoute'); 
-router(app); // Register routes by calling the exported function
+// ✅ Import route
+const router = require('./api/routes/iPhoneRoute');
+router(app); // Đăng ký routes
 
-// Start the server
+// ✅ Khởi chạy server
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Server running at: http://localhost:${port}`);
+  console.log(`🚀 Server is running at: http://localhost:${port}`);
 });
