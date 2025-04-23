@@ -8,7 +8,9 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000', 
-  'https://frontend-rosy-rho.vercel.app'
+  'https://frontend-rosy-rho.vercel.app',
+  'https://frontend-git-master-chienvcgh221136s-projects.vercel.app',
+  'https://frontend-3kqmjz1ke-chienvcgh221136s-projects.vercel.app'
 ];
 
 app.use(cors({
