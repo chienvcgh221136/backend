@@ -7,6 +7,7 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
+  'http://localhost:3000', 
   'https://frontend-rosy-rho.vercel.app'
 ];
 
