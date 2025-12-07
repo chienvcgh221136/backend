@@ -1,10 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
 const app = express();
-
-
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000', 
@@ -12,7 +9,6 @@ const allowedOrigins = [
   'https://frontend-git-master-chienvcgh221136s-projects.vercel.app',
   'https://frontend-3kqmjz1ke-chienvcgh221136s-projects.vercel.app'
 ];
-
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -24,21 +20,16 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-const db = "mongodb+srv://chienpvgch221136:Chien1092004%40@mydbcluster.6kuho.mongodb.net/phone-data";
-
+const db = "mongodb+srv://chienpvgch221136:Chienboybu1092004@mydbcluster.6kuho.mongodb.net/phone-data";
 mongoose.connect(db)
   .then(() => console.log('MongoDB connected successfully!'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-// Import route
 const router = require('./api/routes/iPhoneRoute');
 router(app); 
-
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
